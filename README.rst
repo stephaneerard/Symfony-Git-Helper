@@ -91,6 +91,25 @@ in the .repositories file, but none is overloaded by command-line, the branch wi
 Usage:
 ------
 
+::
+
+  git:init 			Initialize a new git repository
+
+  git:clone 			Clones a repository.
+    [--repositories] 		The .repositories filepath
+    [--submodule]  		Add a new submodule
+    [--commit]     		Commit the changes when using --submodule and we are in a git repository
+    [--commit-message]		Commit message
+    [--branch]			Branch to checkout, overloads the one defined in --repositories file, if any
+    [--tag]			Tag to checkout, overloads the one defined in --repositories file, if any
+    [--path]			Path where to clone/submodule add the repository, overloads the one defined in --repositories file, if any
+
+  git:mclone			Massively clone repositories
+    [--repositories]		The .repositories filepath
+    [--commit]			Commit the changes when using --submodule and we are in a git repository
+    [--commit-message]		Commit message
+
+
 * To install :
 
 ::
@@ -121,13 +140,11 @@ The script will be executed as it is piped, you'll have to enter your password w
 
   sfgit git:clone symfony --submodule
 
-This is like executing :
+  * This is like executing :
 
-::
- 
-  git submodule add git://github.com/stephaneerard/symfony.git src/vendor/symfony
-  cd src/vendor/symfony 
-  git remote add upstream git://github.com/symfony/symfony.git
+    git submodule add git://github.com/stephaneerard/symfony.git src/vendor/symfony
+    cd src/vendor/symfony 
+    git remote add upstream git://github.com/symfony/symfony.git
 
 
 
@@ -137,12 +154,10 @@ This is like executing :
 
   sfgit git:clone symfony --submodule --path /path/where/to/clone/symfony
  
-This is like executing same as above but :
+  * This is like executing same as above but :
 
-::
-
-  git submodule add git://github.com/stephaneerard/symfony.git /path/where/to/clone/symfony
-  #plus same as above
+    git submodule add git://github.com/stephaneerard/symfony.git /path/where/to/clone/symfony
+    #plus adding upstream, etc
   
 If a tag is set, it will be checked out
 If both a tag and a branch are defined in the .repositories, the branch will take over.
