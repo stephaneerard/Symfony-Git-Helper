@@ -109,6 +109,17 @@ Usage:
     [--commit]			Commit the changes when using --submodule and we are in a git repository
     [--commit-message]		Commit message
 
+  git:pull			Pull a git repository
+    [--repositories]		The .repositories filepath
+    [--target]			The path target of the repository, overloads --repositories definition
+    [--remote]			The remote to use, overloads --repositories definition
+    [--branch]			The branch on remote to use, overloads --repositories definition
+
+
+  git:mpull			Massively pull repositories
+    [--repositories]		The .repositories filepath
+    names			The names of the repositories to pull
+
 
 * To install :
 
