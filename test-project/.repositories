@@ -1,0 +1,24 @@
+symfony:
+  url: git@github.com:stephaneerard/symfony.git
+  remotes:
+    upstream:
+      url: git://github.com/symfony/symfony.git
+  branch: master
+  target: src/vendor/symfony
+
+doctrine:
+  url: git@github.com:stephaneerard/doctrine2.git
+  remotes:
+    upstream:
+      url: git://github.com/doctrine/doctrine2.git
+  tag: 2.0.1
+  target: src/vendor/doctrine
+
+imagine:
+  url: git@github.com:stephaneerard/Imagine.git
+  remotes:
+    upstream:
+      url: git://github.com/avalanche123/Imagine.git
+  target: src/vendor/imagine
+  branch: origin/draw_text
+
