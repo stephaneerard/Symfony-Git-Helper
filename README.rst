@@ -102,7 +102,7 @@ Usage:
     [--commit-message]		Commit message
     [--branch]			Branch to checkout, overloads the one defined in --repositories file, if any
     [--tag]			Tag to checkout, overloads the one defined in --repositories file, if any
-    [--path]			Path where to clone/submodule add the repository, overloads the one defined in --repositories file, if any
+    [--target]			Path target where to clone/submodule add the repository, overloads the one defined in --repositories file, if any
 
   git:mclone			Massively clone repositories
     [--repositories]		The .repositories filepath
