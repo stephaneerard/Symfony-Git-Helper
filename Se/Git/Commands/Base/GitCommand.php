@@ -84,25 +84,25 @@ class GitCommand extends Command
 	{
 		if( $repositoriesDataFile = $input->getOption('repositories') )
 		{
-			if( $this->checkRepositoriesDatFile($repositoriesDataFile) )
+			if( $this->checkRepositoriesDataFile($repositoriesDataFile) )
 			{
 				return $repositoriesDataFile;
 			}
 		}
 
-		elseif( $this->checkRepositoriesDatFile($repositoriesDataFile = getcwd() . '/.repositories') )
+		elseif( $this->checkRepositoriesDataFile($repositoriesDataFile = getcwd() . '/.repositories') )
 		{
 			return $repositoriesDataFile;
 		}
 
-		if( isset($_ENV[Application::ENV_VARIABLE]) && $this->checkRepositoriesDatFile($repositoriesDataFile = $_ENV[Application::ENV_VARIABLE]) ){
+		if( isset($_ENV[GitCommand::ENV_VARIABLE]) && $this->checkRepositoriesDataFile($repositoriesDataFile = $_ENV[Application::ENV_VARIABLE]) ){
 			return $repositoriesDataFile;
 		}
 
 		throw new \RuntimeException(
 			'No .repositories file can be found in current working directory' . PHP_EOL .
 			'Or via argument --repositories' . PHP_EOL .
-		sprintf('Or in environment variable "%s"', Application::ENV_VARIABLE) . PHP_EOL
+		sprintf('Or in environment variable "%s"', GitCommand::ENV_VARIABLE) . PHP_EOL
 		);
 	}
 
@@ -110,7 +110,7 @@ class GitCommand extends Command
 	 * @param string $repositoriesDataFile The path to repositories data file
 	 * @throws \RuntimeException If $repositoriesDataFile fiel doesnt exist or is unreadable
 	 */
-	protected function checkRepositoriesDatFile($repositoriesDataFile)
+	protected function checkRepositoriesDataFile($repositoriesDataFile)
 	{
 		if($notFileExists = !file_exists($repositoriesDataFile) || $notFileReadable = !is_readable($repositoriesDataFile))
 		{
