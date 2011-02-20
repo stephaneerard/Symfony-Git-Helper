@@ -75,13 +75,20 @@ Usage:
 ::
   mkdir ~/.sf-git 
   cd ~/.sf-git
-  wget https://github.com/stephaneerard/Symfony-Git-Helper/blob/master/bin/install.php | sh
+  curl https://github.com/stephaneerard/Symfony-Git-Helper/raw/master/bin/install | sudo sh sfgit
+  
+The latest line, latest word is of your choice. sfgit will be the name of the script generated in /usr/bin/.
+So you'll be able to call Sf-Git from anywhere.
+
+
   
 * To init your example project "my-project" :
 ::
   mkdir ~/projects/my-project
   cd ~/projects/my-project
   sf-git git:init #this is 'git init'
+
+
 
 * To initialize a dependency to symfony (as defined in your .repositories) :
 ::
@@ -90,6 +97,8 @@ Usage:
   # git submodule add git://github.com/stephaneerard/symfony.git src/vendor/symfony
   # cd src/vendor/symfony 
   # git remote add upstream git://github.com/symfony/symfony.git
+
+
 
 * To overload the path
 ::
@@ -101,13 +110,13 @@ Usage:
 If a tag is set, it will be checked out
 If both a tag and a branch are defined in the .repositories, the branch will take over.
 
+
+
 Todo:
 -----
 
 * Add option to overload the tag/branch for CloneCommand
 * Add command to pull all repositories
 * Add a file to know which repositories have been created (when cloned) within a directory
-* Add an install command to create a symlink to /usr/bin, so we can call sf-git directly
-* Add a install.sh which helps user install this app, in one line (wget | sh -like)
 * Add a mass-clone command, letting user specifying multiple repositories to clone at once
 
