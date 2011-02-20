@@ -1,3 +1,6 @@
-#!/usr/bin/sh
-wget --no-check-certificate https://github.com/stephaneerard/Symfony-Git-Helper/blob/master/sf-git.phar
-sudo php sf-git.phar git:install $1
+#!/bin/sh
+if [ -f sf-git.phar ]; then
+  rm sf-git.phar;
+fi;
+wget --no-check-certificate https://github.com/stephaneerard/Symfony-Git-Helper/raw/master/sf-git.phar
+echo sudo php sf-git.phar git:install $1
