@@ -82,6 +82,7 @@ Usage:
 The latest line, latest word is of your choice. sfgit will be the name of the script generated in /usr/bin/.
 So you'll be able to call Sf-Git from anywhere.
 
+The script will be executed as it is piped, you'll have to enter your password when the download has finished.
 
   
 * To init your example project "my-project" :
