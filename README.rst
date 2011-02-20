@@ -72,7 +72,9 @@ Usage:
 ------
 
 * To install :
+
 ::
+
   mkdir ~/.sf-git 
   cd ~/.sf-git
   curl https://github.com/stephaneerard/Symfony-Git-Helper/raw/master/bin/install | sudo sh sfgit
@@ -83,7 +85,9 @@ So you'll be able to call Sf-Git from anywhere.
 
   
 * To init your example project "my-project" :
+
 ::
+
   mkdir ~/projects/my-project
   cd ~/projects/my-project
   sf-git git:init #this is 'git init'
@@ -91,7 +95,9 @@ So you'll be able to call Sf-Git from anywhere.
 
 
 * To initialize a dependency to symfony (as defined in your .repositories) :
+
 ::
+
   sf-git git:clone symfony --submodule
   #this is like executing :
   # git submodule add git://github.com/stephaneerard/symfony.git src/vendor/symfony
@@ -101,7 +107,9 @@ So you'll be able to call Sf-Git from anywhere.
 
 
 * To overload the path
+
 ::
+
   sf-git git:clone symfony --submodule --path /path/where/to/clone/symfony
   #this is like executing same as above but :
   # git submodule add git://github.com/stephaneerard/symfony.git /path/where/to/clone/symfony
