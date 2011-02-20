@@ -72,9 +72,8 @@ It looks as follow (this is YAML syntax) :
 
 * symfony: {url: } will be the "origin" remote repository.
 
-I can add named repositories too, like "upstream" (see Git conventions of use; same for "origin"). 
-This is usefull for original repositories of forked ones (like mines) or to declare co-workers
-repositories.
+I can add remotes too, like "upstream" (see Git conventions of use; same for "origin"). 
+The remotes will be automatically added to the submdule/clone repository
 
 * "target" is the actual directory target to use in any project where you'll clone the repository.
 Basically, I want imagine repository to be cloned, each time, in the very same src/vendor/imagine folder.
