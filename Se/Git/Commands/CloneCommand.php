@@ -36,12 +36,14 @@ class CloneCommand extends BaseGitCommand
 	{
 		parent::configure()
 		->addArgument('name', InputArgument::REQUIRED, 'The Git Repository name')
-		->addOption('target', 'ta', InputOption::VALUE_OPTIONAL, 'The target directory', false)
-		->addOption('submodule', 's', InputOption::VALUE_NONE, 'To-clone repository will be added as a submodule')
-		->addOption('commit', 'c', InputOption::VALUE_NONE, 'Commit the repository')
-		->addOption('commit-message', 'm', InputOption::VALUE_OPTIONAL, 'Commit message', '')
-		->addOption('branch', 'b', InputOption::VALUE_OPTIONAL, 'Branch to checkout', false)
-		->addOption('tag', 't', InputOption::VALUE_OPTIONAL, 'Tag to checkout', false)
+		
+		->addOption('target', 				'ta', InputOption::VALUE_OPTIONAL, 	'The target directory', false)
+		->addOption('submodule', 			's', 	InputOption::VALUE_NONE, 			'To-clone repository will be added as a submodule')
+		->addOption('commit', 				'c', 	InputOption::VALUE_NONE, 			'Commit the repository')
+		->addOption('commit-message', 'm', 	InputOption::VALUE_OPTIONAL, 	'Commit message', '')
+		->addOption('branch', 				'b', 	InputOption::VALUE_OPTIONAL, 	'Branch to checkout', false)
+		->addOption('tag', 						't',	InputOption::VALUE_OPTIONAL, 	'Tag to checkout', false)
+		
 		->setName('git:clone')
 		->setDescription('Clone a Git Repository')
 		->setAliases(array('c'))
@@ -93,7 +95,7 @@ class CloneCommand extends BaseGitCommand
 		
 		if($commit)
 		{
-			$this->_commit($commitMessage, $originalDir, $output);
+			$this->_commit($commitMessage, $originalDir, './'.$target, $output, $input->getOption('submodule'));
 		}
 
 	}
@@ -143,7 +145,7 @@ class CloneCommand extends BaseGitCommand
 	 */
 	protected function _branch($branch, $output)
 	{
-		if(strpos('/', $branch))
+		if(strpos($branch, '/'))
 		{
 			list($remote, $branch) = explode('/', $branch);
 			if($branch === null){
@@ -170,11 +172,12 @@ class CloneCommand extends BaseGitCommand
 		exec(sprintf('git checkout -b %s tags/%s', $tag, $tag));
 	}
 	
-	protected function _commit($msg, $dir, $output)
+	protected function _commit($msg, $dir, $targetDir, $output, $submodule)
 	{
-		exec(sprintf('git add ./'));
-		$output->writeln(sprintf('<info> committing...</info>'));
 		chdir($dir);
+		exec('git add ' . $targetDir);
+		$submodule ? exec('git add .gitmodules') : false;
+		$output->writeln(sprintf('<info> committing...</info>'));
 		exec(sprintf('git commit -m"%s"', $msg));
 	}
 }

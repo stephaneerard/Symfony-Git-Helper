@@ -120,10 +120,14 @@ The script will be executed as it is piped, you'll have to enter your password w
 ::
 
   sfgit git:clone symfony --submodule
-  #this is like executing :
-  # git submodule add git://github.com/stephaneerard/symfony.git src/vendor/symfony
-  # cd src/vendor/symfony 
-  # git remote add upstream git://github.com/symfony/symfony.git
+
+This is like executing :
+
+::
+ 
+  git submodule add git://github.com/stephaneerard/symfony.git src/vendor/symfony
+  cd src/vendor/symfony 
+  git remote add upstream git://github.com/symfony/symfony.git
 
 
 
@@ -132,12 +136,26 @@ The script will be executed as it is piped, you'll have to enter your password w
 ::
 
   sfgit git:clone symfony --submodule --path /path/where/to/clone/symfony
-  #this is like executing same as above but :
-  # git submodule add git://github.com/stephaneerard/symfony.git /path/where/to/clone/symfony
+ 
+This is like executing same as above but :
+
+::
+
+  git submodule add git://github.com/stephaneerard/symfony.git /path/where/to/clone/symfony
   #plus same as above
   
 If a tag is set, it will be checked out
 If both a tag and a branch are defined in the .repositories, the branch will take over.
+
+* To mass-clone :
+
+::
+
+  sfgit git:mclone --submodule --commit "symfony doctrine"
+
+This will clone (or add as submodule when specifying --submodule) each repository named in the "".
+Each submodule add or cloning will be committed using the --commit.
+You can specify a commit message with --commit-message.
 
 
 

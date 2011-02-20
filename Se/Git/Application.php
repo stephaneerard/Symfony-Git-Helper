@@ -35,6 +35,7 @@ class Application extends BaseApplication
 
 		$this->add(new Commands\InitCommand());
 		$this->add(new Commands\CloneCommand());
+		$this->add(new Commands\MassCloneCommand());
 		$this->add(new Commands\InstallCommand());
 	}
 }
