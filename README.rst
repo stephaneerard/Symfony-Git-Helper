@@ -41,7 +41,7 @@ Structure of a .repositories Git Repositories Dictionnary file
 --------------------------------------------------------------
 
 An example is given in the test-project/.repositories
-It looks as follow:
+It looks as follow (this is YAML syntax) :
 
 ::
 
@@ -68,6 +68,24 @@ It looks as follow:
         url: git://github.com/avalanche123/Imagine.git
     target: src/vendor/imagine
     branch: origin/draw_text
+
+
+* symfony: {url: } will be the "origin" remote repository.
+
+I can add named repositories too, like "upstream" (see Git conventions of use; same for "origin"). 
+This is usefull for original repositories of forked ones (like mines) or to declare co-workers
+repositories.
+
+* "target" is the actual directory target to use in any project where you'll clone the repository.
+Basically, I want imagine repository to be cloned, each time, in the very same src/vendor/imagine folder.
+You can overload this by adding --target to the git:clone command.
+
+* "branch" is the branch to checkout. If specified, the branch will be checked out but not committed.
+Add --commit to commit the checkout, and -m to specify the commit message.
+
+* "tag" is the tag to checkout. If specified, the tag will be checkout out but not committed.
+Add --commit to commit the checkout, and -m to specify the commit message. If a branch AND a tag are specified
+in the .repositories file, but none is overloaded by command-line, the branch will take over.
 
 
 Usage:
