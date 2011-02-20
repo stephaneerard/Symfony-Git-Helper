@@ -16,7 +16,8 @@ Instead of executing
 You'll be able to execute
 
 ::
-  ./sf-git git:clone myGitRepo
+
+  sfgit git:clone myGitRepo
   
 If you want to make it a submodule for your current working git repository, declaring 
 a dependency, simply add --submodule at the end.
@@ -91,7 +92,7 @@ The script will be executed as it is piped, you'll have to enter your password w
 
   mkdir ~/projects/my-project
   cd ~/projects/my-project
-  sf-git git:init #this is 'git init'
+  sfgit git:init #this is 'git init'
 
 
 
@@ -99,7 +100,7 @@ The script will be executed as it is piped, you'll have to enter your password w
 
 ::
 
-  sf-git git:clone symfony --submodule
+  sfgit git:clone symfony --submodule
   #this is like executing :
   # git submodule add git://github.com/stephaneerard/symfony.git src/vendor/symfony
   # cd src/vendor/symfony 
@@ -111,7 +112,7 @@ The script will be executed as it is piped, you'll have to enter your password w
 
 ::
 
-  sf-git git:clone symfony --submodule --path /path/where/to/clone/symfony
+  sfgit git:clone symfony --submodule --path /path/where/to/clone/symfony
   #this is like executing same as above but :
   # git submodule add git://github.com/stephaneerard/symfony.git /path/where/to/clone/symfony
   #plus same as above
