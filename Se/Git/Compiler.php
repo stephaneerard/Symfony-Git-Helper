@@ -83,7 +83,7 @@ EOF;
 	{
 		$files = array(
             'LICENSE',
-            'README.markdown',
+            'README.rst',
 		);
 
 		$dirs = array(
