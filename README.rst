@@ -177,8 +177,6 @@ You can specify a commit message with --commit-message.
 Todo:
 -----
 
-* Add option to overload the tag/branch for CloneCommand
 * Add command to pull all repositories
 * Add a file to know which repositories have been created (when cloned) within a directory
-* Add a mass-clone command, letting user specifying multiple repositories to clone at once
 
