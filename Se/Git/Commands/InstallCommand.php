@@ -33,10 +33,10 @@ class InstallCommand extends Command
 	{
 		$this
 		->setDefinition(array(
-			new InputOption('path', 'p', InputOption::VALUE_OPTIONAL, 'Where to symlink', '/usr/bin/sf-git'),
+			new InputOption('path', 'p', InputOption::VALUE_OPTIONAL, 'Where to symlink', '/usr/bin/sfgit'),
 		))
 		->setName('git:install')
-		->setDescription('install Sf-Git in /usr/bin using symlink')
+		->setDescription('install Sf-Git system-wide')
 		;
 	}
 
@@ -45,7 +45,21 @@ class InstallCommand extends Command
 	 */
 	protected function execute(InputInterface $input, OutputInterface $output)
 	{
-		$filesystem = new Filesystem();
-		$filesystem->symlink(realpath(__DIR__ . '/../../../sf-git'), $input->getOption('path'));
+		if(!strlen(\Phar::running()) > 0 )
+		{
+			throw new \RuntimeException('Must be running from Phar');
+		}
+		$path = str_replace('phar://', '', \Phar::running());
+		$content = <<<EOF
+#!/usr/bin/env php
+<?php
+require_once '{$path}';
+
+EOF;
+
+		file_put_contents($input->getOption('path'), $content);
+		chmod($input->getOption('path'), '0007');
+		$output->writeln('<info>Installed.</info>');
+		$output->writeln(sprintf('<info>Usage: %s</info>', basename($input->getOption('path'))));
 	}
 }
