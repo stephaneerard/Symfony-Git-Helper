@@ -36,8 +36,12 @@ class CloneCommand extends BaseGitCommand
 	{
 		parent::configure()
 		->addArgument('name', InputArgument::REQUIRED, 'The Git Repository name')
-		->addOption('target', 't', InputOption::VALUE_OPTIONAL, 'The target directory', false)
-		->addOption('submodule', 's', InputOption::VALUE_NONE, 'Clone repository and make it a submodule')
+		->addOption('target', 'ta', InputOption::VALUE_OPTIONAL, 'The target directory', false)
+		->addOption('submodule', 's', InputOption::VALUE_NONE, 'To-clone repository will be added as a submodule')
+		->addOption('commit', 'c', InputOption::VALUE_NONE, 'Commit the repository')
+		->addOption('commit-message', 'm', InputOption::VALUE_OPTIONAL, 'Commit message', '')
+		->addOption('branch', 'b', InputOption::VALUE_OPTIONAL, 'Branch to checkout', false)
+		->addOption('tag', 't', InputOption::VALUE_OPTIONAL, 'Tag to checkout', false)
 		->setName('git:clone')
 		->setDescription('Clone a Git Repository')
 		->setAliases(array('c'))
@@ -51,42 +55,78 @@ class CloneCommand extends BaseGitCommand
 	{
 		parent::execute($input, $output);
 		$repositoryDef = $this->getRepositoryDefinition($input->getArgument('name'));
+		
 		$target = $input->getOption('target') === false ? $repositoryDef['target'] : $input->getOption('target');
-
+		
+		$repositoryDef['branch'] = $input->getOption('branch') === false ? $repositoryDef['branch'] : $input->getOption('branch');
+		$repositoryDef['tag'] = $input->getOption('tag') === false ? (isset($repositoryDef['tag']) ? $repositoryDef['tag'] : false) : $input->getOption('tag');
+		
+		$commit = $input->getOption('commit');
+		$commitMessage = 
+			$input->getOption('commit-message') === '' ? 
+				sprintf(
+					'Commit %s %s', 
+					$input->getOption('submodule') ? 'submodule' : 'clone', 
+					$input->getArgument('name')
+				) : $input->getOption('commit-message');
+		
+		
+		
 		$this->_clone($repositoryDef['url'], $target, $input->getOption('submodule'), $output);
-
+		$originalDir = getcwd();
 		chdir(realpath('./'.$target));
 
+		
 		if(isset($repositoryDef['remotes']) && !empty($repositoryDef['remotes']))
 		{
-			$this->_remotes($target, $repositoryDef['remotes'], $output);
+			$this->_remotes($repositoryDef['remotes'], $output);
 		}
 
 		if(isset($repositoryDef['branch']) && $repositoryDef['branch'])
 		{
-			$this->_branch($target, $repositoryDef['branch'], $output);
+			$this->_branch($repositoryDef['branch'], $output);
 		}
 		elseif(isset($repositoryDef['tag']) && $repositoryDef['tag'])
 		{
-			$this->_tag($target, $repositoryDef['tag'], $output);
+			$this->_tag($repositoryDef['tag'], $output);
+		}
+		
+		if($commit)
+		{
+			$this->_commit($commitMessage, $originalDir, $output);
 		}
 
 	}
 
+	/**
+	 * Clone $url repository to $target.
+	 * If $submodule, will be executed as a git submodule command
+	 * 
+	 * @param unknown_type $url
+	 * @param unknown_type $target
+	 * @param unknown_type $submodule
+	 * @param unknown_type $output
+	 */
 	protected function _clone($url, $target, $submodule, $output)
 	{
 		$cmd = sprintf(
 			'git %s %s %s %s',
-		$submodule ? 'submodule add' : 'clone',
-		$url,
-		$target,
-		$submodule ? '--recursive' : ''
+			$submodule ? 'submodule add' : 'clone',
+			$url,
+			$target,
+			$submodule ? '--recursive' : ''
 		);
 		$output->writeln(sprintf('<info>%s</info>', $cmd));
 		exec($cmd, $out, $exitCode);
 	}
 
-	protected function _remotes($target, $remotes, $output)
+	/**
+	 * Add $remotes
+	 * 
+	 * @param unknown_type $remotes
+	 * @param unknown_type $output
+	 */
+	protected function _remotes($remotes, $output)
 	{
 		foreach($remotes as $remote => $def)
 		{
@@ -95,7 +135,13 @@ class CloneCommand extends BaseGitCommand
 		}
 	}
 
-	protected function _branch($target, $branch, $output)
+	/**
+	 * Will checkout $branch
+	 * 
+	 * @param unknown_type $branch
+	 * @param unknown_type $output
+	 */
+	protected function _branch($branch, $output)
 	{
 		if(strpos('/', $branch))
 		{
@@ -112,9 +158,23 @@ class CloneCommand extends BaseGitCommand
 		exec(sprintf('git checkout -b %s %s/%s', $branch, $remote, $branch));
 	}
 
-	protected function _tag($target, $tag, $output)
+	/**
+	 * Will checkout $tag
+	 * 
+	 * @param unknown_type $tag
+	 * @param unknown_type $output
+	 */
+	protected function _tag($tag, $output)
 	{
 		$output->writeln(sprintf('<info>branching to tag "%s"</info>', $tag));
 		exec(sprintf('git checkout -b %s tags/%s', $tag, $tag));
+	}
+	
+	protected function _commit($msg, $dir, $output)
+	{
+		exec(sprintf('git add ./'));
+		$output->writeln(sprintf('<info> committing...</info>'));
+		chdir($dir);
+		exec(sprintf('git commit -m"%s"', $msg));
 	}
 }
