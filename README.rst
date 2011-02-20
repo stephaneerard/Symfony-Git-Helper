@@ -31,10 +31,11 @@ Defining Git Repositories .repositories filepath
 
 When executing sf-git.phar, you have tree choices :
 
-1- giving a --repositories /path/to/my/.repositories argument
-2- having a .repositories file existing in current working directory
-3- having an environment variable SF_GIT_REPO_DIC pointing to a .repositories -like file
+* Giving a --repositories /path/to/my/.repositories argument (if none given, then)
+* Having a .repositories file existing in current working directory (if none exists, then)
+* Having an environment variable SF_GIT_REPO_DIC pointing to a .repositories -like file (if none exists, throw exception)
 
+These are cited in the order the code executes.
  
 Structure of a .repositories Git Repositories Dictionnary file
 --------------------------------------------------------------
