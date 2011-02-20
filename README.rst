@@ -68,6 +68,38 @@ It looks as follow:
     branch: origin/draw_text
 
 
+Usage:
+------
+
+* To install :
+::
+  mkdir ~/.sf-git 
+  cd ~/.sf-git
+  wget https://github.com/stephaneerard/Symfony-Git-Helper/blob/master/bin/install.php | sh
+  
+* To init your example project "my-project" :
+::
+  mkdir ~/projects/my-project
+  cd ~/projects/my-project
+  sf-git git:init #this is 'git init'
+
+* To initialize a dependency to symfony (as defined in your .repositories) :
+::
+  sf-git git:clone symfony --submodule
+  #this is like executing :
+  # git submodule add git://github.com/stephaneerard/symfony.git src/vendor/symfony
+  # cd src/vendor/symfony 
+  # git remote add upstream git://github.com/symfony/symfony.git
+
+* To overload the path
+::
+  sf-git git:clone symfony --submodule --path /path/where/to/clone/symfony
+  #this is like executing same as above but :
+  # git submodule add git://github.com/stephaneerard/symfony.git /path/where/to/clone/symfony
+  #plus same as above
+  
+If a tag is set, it will be checked out
+If both a tag and a branch are defined in the .repositories, the branch will take over.
 
 Todo:
 -----
