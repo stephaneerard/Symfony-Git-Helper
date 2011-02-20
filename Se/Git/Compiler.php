@@ -38,12 +38,9 @@ class Compiler
 		// Files
 		foreach ($this->getFiles() as $file) {
 			$path = str_replace(__DIR__.'/', '', $file);
+			echo $path . PHP_EOL;
 
-			if (false !== strpos($file, '.php') && false === strpos($file, '/skeleton/')) {
-				$content = self::stripComments(file_get_contents($file));
-			} else {
-				$content = file_get_contents($file);
-			}
+			$content = self::stripComments(file_get_contents($file));
 
 			$phar->addFromString($path, $content);
 		}
@@ -121,7 +118,7 @@ EOF;
 				$output .= $token[1];
 			}
 		}
-
+		
 		// replace multiple new lines with a single newline
 		$output = preg_replace(array('/\s+$/Sm', '/\n+/S'), "\n", $output);
 
